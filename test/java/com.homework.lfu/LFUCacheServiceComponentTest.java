@@ -50,6 +50,8 @@ class LFUCacheServiceComponentTest {
         assertNull(cacheService.get(3));
         assertNull(cacheService.get(4));
         assertEquals("City5", cacheService.get(5).getData());
+
+        testCache.getStatistics();
     }
 
     @Test
@@ -69,5 +71,7 @@ class LFUCacheServiceComponentTest {
         // first 2 got bigger frequency, not removed
         assertEquals("City0", cacheService.get(0).getData());
         assertEquals("City1", cacheService.get(1).getData());
+
+        testCache.getStatistics();
     }
 }

@@ -55,7 +55,7 @@ public class InMemoryCacheMap {
             throw new IllegalArgumentException("Key or value cannot be null");
         }
 
-        long start = System.currentTimeMillis();
+        long start = System.nanoTime();
 
         if (cacheMap.size() >= maxSize) {
             Integer evictKey = evictionPolicy.doEviction();
@@ -67,7 +67,7 @@ public class InMemoryCacheMap {
         cacheMap.put(key, value);
         evictionPolicy.updateAccessFrequency(key);
 
-        long duration = System.currentTimeMillis() - start;
+        long duration = System.nanoTime() - start;
         totalPutTime.addAndGet(duration);
         putCount.incrementAndGet();
     }
@@ -81,8 +81,8 @@ public class InMemoryCacheMap {
 
     public void getStatistics() {
         int count = putCount.get();
-        double avgMillis = count == 0 ? 0 : (totalPutTime.get()) / count;
-        System.out.println("Average put time, ms: " + avgMillis);
+        double avgNanos = count == 0 ? 0 : (totalPutTime.get()) / count;
+        System.out.println("Average put time, ms: " + avgNanos / 1000000);
         System.out.println("Total cache evictions: " + cacheEvictions.get());
     }
 }
